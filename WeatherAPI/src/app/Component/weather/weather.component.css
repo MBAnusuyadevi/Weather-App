@@ -1,0 +1,17 @@
+.WeatherSearch {
+  background-color: #007BFF; /* Background color of the button */
+  color: #FFFFFF; /* Text color */
+  padding: 10px 20px; /* Padding around the text */
+  border: none; /* Remove the border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth background color transition */
+  position: absolute;
+  top: 10px; /* Adjust the distance from the top */
+  right: 30px; /* Adjust the distance from the right */
+  border-radius: 50%;
+}
+
+.WeatherSearch:hover {
+  background-color: #b30054; /* Change background color on hover */
+}

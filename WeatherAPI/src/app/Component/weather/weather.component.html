@@ -1,0 +1,23 @@
+<nav>
+  <ul>
+    <li><a routerLink="/weather-display">Weather Display</a></li>
+  </ul>
+</nav>
+<nav>
+  <ul>
+    <li><a class = "WeatherSearch"routerLink="/weather-search">Weather Search</a></li>
+  </ul>
+</nav>
+<div class="weather-container">
+    <h2>Weather Information</h2>
+    
+    <div *ngIf="weatherData">
+      <h3>City: {{ weatherData.name }}</h3>
+      <p>Temperature: {{ weatherData.main.temp }}°C</p>
+      <p>Weather Description: {{ weatherData.weather[0].description }}</p>
+    </div>
+    
+    <div *ngIf="errorMessage">
+      <p class="error-message">{{ errorMessage }}</p>
+    </div>
+

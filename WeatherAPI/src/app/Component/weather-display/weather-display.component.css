@@ -1,0 +1,8 @@
+.forecast-day {
+  margin-bottom: 20px; /* Add spacing between forecast days */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: left; /* Adjust text alignment to left */
+  background-color: #f0f0f0;
+}
