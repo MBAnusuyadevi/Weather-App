@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./location.component.css']
 })
 export class LocationComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor( private router: Router) {}
 
   ngOnInit(): void {
     this.getLocation();
@@ -19,6 +19,8 @@ export class LocationComponent implements OnInit {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         this.router.navigate(['/weather'], { queryParams: { lat, lon } });
+      }, (error) => {
+        console.error('Error getting geolocation:', error);
       });
     } else {
       console.error('Geolocation is not supported by your browser.');

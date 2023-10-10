@@ -4,10 +4,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LocationComponent } from './Component/location/location.component';
-import { WeatherDisplayComponent } from './Component/weather-display/weather-display.component';
-import { WeatherComponent } from './Component/weather/weather.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WeathersearchComponent } from './Component/weather-search/weathersearch.component';
+import { WeatherComponent } from './Component/weather/weather.component';
 
 
 @NgModule({
@@ -15,14 +14,15 @@ import { WeathersearchComponent } from './Component/weather-search/weathersearch
     AppComponent,
     WeatherComponent,
     LocationComponent,
-    WeatherDisplayComponent,
-    WeathersearchComponent
+    WeathersearchComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

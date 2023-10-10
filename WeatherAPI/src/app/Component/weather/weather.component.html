@@ -1,12 +1,5 @@
 <nav>
-  <ul>
-    <li><a routerLink="/weather-display">Weather Display</a></li>
-  </ul>
-</nav>
-<nav>
-  <ul>
-    <li><a class = "WeatherSearch"routerLink="/weather-search">Weather Search</a></li>
-  </ul>
+    <ul><a class = "WeatherSearch"routerLink="/weather-search">Weather Search</a></ul>
 </nav>
 <div class="weather-container">
     <h2>Weather Information</h2>
@@ -20,4 +13,19 @@
     <div *ngIf="errorMessage">
       <p class="error-message">{{ errorMessage }}</p>
     </div>
+
+      <div *ngIf="forecastData">
+        <h2>Weather Forecast</h2>
+        <div *ngFor="let item of forecastData.list">
+          <p><strong>Date/Time:</strong> {{ item.dt_txt }}</p>
+          <p><strong>Temperature:</strong> {{ item.main.temp }}°C</p>
+          <p><strong>Condition:</strong> {{ item.weather[0].description }}</p>
+          <!-- Add more forecast data properties as needed -->
+        </div>
+      </div>
+      
+      <div *ngIf="errorMessage">
+        <p>{{ errorMessage }}</p>
+      </div>
+      
 

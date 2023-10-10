@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { LocationService } from 'src/app/Service/User Location/ForeCastLocation.service';
 import { WeatherService } from 'src/app/Service/User Location/weather.service';
+
+
 
 
 @Component({
@@ -11,8 +14,9 @@ import { WeatherService } from 'src/app/Service/User Location/weather.service';
 export class WeatherComponent implements OnInit {
   weatherData: any;
   errorMessage: string = '';
+  forecastData: any;
 
-  constructor(private route: ActivatedRoute, private weatherService: WeatherService) {}
+  constructor(private route: ActivatedRoute, private weatherService: WeatherService, private locationService:LocationService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
@@ -23,6 +27,7 @@ export class WeatherComponent implements OnInit {
         this.getWeatherByLocation(lat, lon);
       }
     });
+    this.getLocationAndFetchForecast();
     
   }
 
@@ -37,5 +42,32 @@ export class WeatherComponent implements OnInit {
       }
     );
   }
+  getLocationAndFetchForecast() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          this.locationService
+            .getForecastByLocation(lat, lon)
+            .subscribe(
+              (data) => {
+                this.forecastData = data;
+              },
+              (error) => {
+                this.errorMessage = 'Error fetching forecast data.';
+                console.error(error);
+              }
+            );
+        },
+        (error) => {
+          this.errorMessage = 'Error fetching location data.';
+          console.error(error);
+        }
+      );
+    } else {
+      this.errorMessage = 'Geolocation is not supported by your browser.';
+    }
 
+}
 }
