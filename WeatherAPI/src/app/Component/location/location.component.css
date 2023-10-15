@@ -1,29 +1,58 @@
-/* location.component.css */
-
-/* Center the content vertically and horizontally */
-.location-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: top;
-  height: 100vh; /* Adjust to your preferred height */
-  background-color: #f5f5f5; /* Set the background color */
-  background-image: url(https://source.unsplash.com/random/1600x900/?weather);
+.weather-info {
+  background-color:grey;
+  padding: 10px;
+  border: 1px solid #10c8e0;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
 
-/* Style the button */
-.location-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007bff; /* Button background color */
-  color: #fff; /* Button text color */
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease; /* Add a smooth transition */
+.forecast-item {
+  background-color:grey;
+  padding: 10px;
+  border: 1px solid #dbaa16;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
 
-/* Style the button on hover */
-.location-button:hover {
-  background-color: #0056b3; /* Darker background color on hover */
+.error-message {
+  color: #dc3545;
+}
+app-logout{
+  position: absolute;
+  top: 20px; /* Adjust the top distance as needed */
+  right: 10px;
+  padding: 10px 24px;
+  color:black;
+  background-color: blue;
+}
+.WeatherSearch{
+  position: absolute;
+  top: 20px; /* Adjust the top distance as needed */
+  right: 130px;
+  padding: 10px 24px;
+  color:black;
+  background-color: blue;
+
+}
+body {
+  margin: 0;
+  padding: 110px;
+  background-size: cover; /* This ensures the image covers the entire background */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  font-family: Arial, sans-serif; /* Define a fallback font */
+background-color: black;
+}
+
+
+h2{
+  position: absolute;
+  top: 1px;
+  right: 500px;
+  color: palevioletred;
+}
+.button{
+  padding: 10px 24px;
+  color:black;
+  background-color: blue;
 }

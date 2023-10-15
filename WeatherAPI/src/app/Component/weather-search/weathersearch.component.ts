@@ -15,7 +15,7 @@ export class WeathersearchComponent {
   constructor(private weathersearchService: WeathersearchService) {}
 
   searchLocation() {
-    this.weathersearchService.getWeatherByLocation(this.query).subscribe(
+    this.weathersearchService.getCurrentWeather(this.query).subscribe(
       (data: any) => {
         this.weatherData = data;
       },
@@ -29,6 +29,5 @@ export class WeathersearchComponent {
         this.forecastData = data;
 
       });
-    }
-      
+    }     
 }

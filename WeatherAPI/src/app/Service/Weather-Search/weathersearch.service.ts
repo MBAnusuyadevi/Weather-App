@@ -13,7 +13,7 @@ export class WeathersearchService {
   
     constructor(private http: HttpClient) { }
   
-    getWeatherByLocation(query: string) {
+    getCurrentWeather(query: string) {
       const url = `${this.apiUrl}/current.json?key=${this.apiKey}&q=${query}`;
       return this.http.get(url);
     }

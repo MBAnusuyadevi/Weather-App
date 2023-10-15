@@ -17,7 +17,6 @@ describe('WeathersearchService', () => {
   });
 
   afterEach(() => {
-    // After every test, assert that there are no more outstanding HTTP requests.
     httpTestingController.verify();
   });
 
@@ -32,7 +31,7 @@ describe('WeathersearchService', () => {
     };
 
     const query = 'MockLocation';
-    service.getWeatherByLocation(query).subscribe((data) => {
+    service.getCurrentWeather(query).subscribe((data) => {
       expect(data).toEqual(mockWeatherData);
     });
 
@@ -45,7 +44,6 @@ describe('WeathersearchService', () => {
 
   it('should retrieve forecast data by location and days', () => {
     const mockForecastData = {
-      // Your mock forecast data here
     };
 
     const query = 'MockLocation';

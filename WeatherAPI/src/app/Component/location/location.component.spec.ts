@@ -1,51 +1,127 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { LocationComponent } from './location.component';
-import { RouterTestingModule } from '@angular/router/testing';
+import { WeatherService } from 'src/app/Service/User Location/weather.service';
+import { LocationService } from 'src/app/Service/User Location/ForeCastLocation.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { of, throwError } from 'rxjs';
+import { HttpClientModule } from '@angular/common/http';
+import { LogoutComponent } from '../Authentication/logout/logout.component';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
+
+class MockAngularFireAuth {
+  signOut(): Promise<void> {
+    return Promise.resolve();
+  }
+}
 
 describe('LocationComponent', () => {
   let component: LocationComponent;
   let fixture: ComponentFixture<LocationComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [LocationComponent],
-      imports: [RouterTestingModule] // Import RouterTestingModule
-    }).compileComponents();
-  });
+  let weatherService: WeatherService;
+  let locationService: LocationService;
+  let router: Router;
 
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [LocationComponent, LogoutComponent],
+      providers: [
+        WeatherService,
+        LocationService,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            queryParams: of({ lat: 123, lon: 456 }),
+          },
+        },
+        {
+          provide: Router,
+          useValue: {
+            navigate: jasmine.createSpy('navigate'),
+          },
+        },
+        {
+          provide: AngularFireAuth,
+          useClass: MockAngularFireAuth,
+        },
+      ],
+      imports: [HttpClientModule], 
+    });
+
     fixture = TestBed.createComponent(LocationComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    weatherService = TestBed.inject(WeatherService);
+    locationService = TestBed.inject(LocationService);
+    router = TestBed.inject(Router);
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should navigate to /weather on successful geolocation', () => {
-    // Mock the geolocation API
-    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((successCallback) => {
-      // Simulate a successful geolocation response
-      successCallback({
-        coords: {
-          latitude: 42.12345,
-          longitude: -71.67890,
-        },
-      }as any);
-    });
+  it('should fetch weather and forecast data by location', fakeAsync(() => {
+    const mockedWeatherData = {
+      temperature: 25,
+      weatherdescription:'broken clouds'
+    };
+    const mockedForecastData = {
+      dailyForecast: [
+        {
+          date: '2023-10-13 15:00:00',
+          temperature: 26.94,
+          Condition: 'broken clouds',
+          },
+      ],
+    };
+    spyOn(weatherService, 'getWeatherByLocation').and.returnValue(of(mockedWeatherData));
+    spyOn(locationService, 'getForecastByLocation').and.returnValue(of(mockedForecastData));
   
-  const navigateSpy = spyOn(component['router'], 'navigate');
+    component.ngOnInit();
+    tick(); 
+    expect(weatherService.getWeatherByLocation).toHaveBeenCalledWith(123, 456);
+    expect(locationService.getForecastByLocation).toHaveBeenCalledWith(123, 456);
+  }));
 
-  // Call the getLocation method
-  component.getLocation();
+  it('should handle errors during data fetching', fakeAsync(() => {
+    spyOn(weatherService, 'getWeatherByLocation').and.returnValue(throwError('Weather error'));
+    spyOn(locationService, 'getForecastByLocation').and.returnValue(throwError('Forecast error'));
 
-  // Expect that router.navigate was called with the correct arguments
-  expect(navigateSpy).toHaveBeenCalledWith(['/weather'], {
-    queryParams: {
-      lat: 42.12345,
-      lon: -71.67890,
-    },
+    component.ngOnInit();
+    tick(); 
+    expect(component.errorMessage).toContain('Error fetching');
+
+  }))
+
+  it('should navigate with geolocation data', fakeAsync(() => {
+    spyOn(navigator.geolocation, 'getCurrentPosition').and.callFake((successCallback) => {
+      const position = { coords: { latitude: 12.34, longitude: 56.78 } }as any;
+      successCallback(position);
+    });
+
+    component.getLocation();
+    tick();
+    expect(router.navigate).toHaveBeenCalledWith(['/weather'], { queryParams: { lat: 12.34, lon: 56.78 } });
+
+  }))
+  
+
+  it('should handle geolocation not supported', () => {
+    component.errorMessage = '';
+  
+    const mockGeolocation = {
+      getCurrentPosition: (successCallback: PositionCallback, errorCallback: PositionErrorCallback) => {
+        const error = {
+          code: 3, 
+          message: 'Geolocation is not supported by your browser.',
+        };
+        errorCallback(error as GeolocationPositionError);
+      },
+    } as any;
+  
+    spyOnProperty(navigator, 'geolocation').and.returnValue(mockGeolocation);
+  
+    component.getLocation();
+  
+    expect(component.errorMessage).toBe('Geolocation is not supported by your browser.');
   });
 });
-})

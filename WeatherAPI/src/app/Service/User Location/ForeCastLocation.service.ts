@@ -17,7 +17,7 @@ export class LocationService {
       lat: lat.toString(),
       lon: lon.toString(),
       appid: this.apiKey,
-      units: 'metric', // Change units as needed
+      units: 'metric', 
     };
 
     return this.http.get<any>(this.apiUrl, { params });

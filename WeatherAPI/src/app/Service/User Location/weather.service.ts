@@ -18,7 +18,7 @@ export class WeatherService {
       lat: lat.toString(),
       lon: lon.toString(),
       appid: this.apiKey,
-      units: 'metric' // Use 'imperial' for Fahrenheit
+      units: 'metric' 
     };
 
     return this.http.get(`${this.apiUrl}`, { params });

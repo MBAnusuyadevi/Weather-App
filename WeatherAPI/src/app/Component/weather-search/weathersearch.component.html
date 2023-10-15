@@ -1,6 +1,7 @@
-<div>
+<body>
+  <div>
     <input [(ngModel)]="query" placeholder="Enter a location" />
-    <button (click)="searchLocation()">Search</button>
+    <button class="button" (click)="searchLocation()">Search</button>
   </div>
   <div *ngIf="weatherData">
     <h2>Weather in {{ weatherData.location.name }}, {{ weatherData.location.country }}</h2>
@@ -9,13 +10,12 @@
   </div>
   
   <div *ngIf="forecastData">
-    <h2>Weather Forecast</h2>
     <div *ngFor="let day of forecastData.forecast.forecastday">
       <div class="forecast-day">
         <p><strong>Date:</strong> {{ day.date }}</p>
         <p><strong>Average Temperature:</strong> {{ day.day.avgtemp_c }}°C</p>
         <p><strong>Condition:</strong> {{ day.day.condition.text }}</p>
-        <!-- Add more forecast data properties as needed -->
       </div>
     </div>
   </div>
+  </body>

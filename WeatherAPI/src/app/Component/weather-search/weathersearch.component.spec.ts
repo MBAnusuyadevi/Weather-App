@@ -1,43 +1,90 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture, tick, fakeAsync } from '@angular/core/testing';
 import { WeathersearchComponent } from './weathersearch.component';
 import { WeathersearchService } from 'src/app/Service/Weather-Search/weathersearch.service';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { LogoutComponent } from '../Authentication/logout/logout.component';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+
+class MockAngularFireAuth {
+  signOut(): Promise<void> {
+    return Promise.resolve();
+  }
+}
 
 describe('WeathersearchComponent', () => {
-  let component: WeathersearchComponent;
   let fixture: ComponentFixture<WeathersearchComponent>;
-  let weathersearchService: jasmine.SpyObj<WeathersearchService>;
+  let component: WeathersearchComponent;
+  let weathersearchService: WeathersearchService;
 
   beforeEach(() => {
-    weathersearchService = jasmine.createSpyObj('WeathersearchService', ['getWeatherByLocation', 'getForecast']);
-
     TestBed.configureTestingModule({
-      declarations: [WeathersearchComponent],
-      providers: [{ provide: WeathersearchService, useValue: weathersearchService }],
+      declarations: [WeathersearchComponent, LogoutComponent],
+      providers: [WeathersearchService,
+        {
+          provide: AngularFireAuth,
+          useClass: MockAngularFireAuth,
+        },
+      ],
+      imports: [HttpClientTestingModule],
     });
 
     fixture = TestBed.createComponent(WeathersearchComponent);
     component = fixture.componentInstance;
+    weathersearchService = TestBed.inject(WeathersearchService);
   });
 
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should fetch weather data and forecast data on searchLocation', () => {
-    const mockWeatherData = { /* Define your mock weather data here */ };
-    const mockForecastData = { /* Define your mock forecast data here */ };
+  it('should retrieve weather data and forecast data', fakeAsync(() => {
+    const mockWeatherData = {
+      temperature: 25,
+      condition: 'Sunny',
+    };
 
-    weathersearchService.getWeatherByLocation.and.returnValue(of(mockWeatherData));
-    weathersearchService.getForecast.and.returnValue(of(mockForecastData));
+    const mockForecastData = {
+      dailyForecast: [
+        {
+          date: '2023-10-15',
+          temperature: {
+            max: 28,
+            min: 18,
+          },
+          condition: 'Sunny',
+        },
+        {
+          date: '2023-10-16',
+          temperature: {
+            max: 26,
+            min: 17,
+          },
+          condition: 'Partly Cloudy',
+        },
+        // Add more forecast data as needed
+      ],
+    };
 
-    component.query = 'MockCity'; // Set a query to simulate user input
+    spyOn(weathersearchService, 'getCurrentWeather').and.returnValue(of(mockWeatherData));
+    spyOn(weathersearchService, 'getForecast').and.returnValue(of(mockForecastData));
+
+    component.query = '';
     component.searchLocation();
-
-    expect(weathersearchService.getWeatherByLocation).toHaveBeenCalledWith('MockCity');
-    expect(weathersearchService.getForecast).toHaveBeenCalledWith('MockCity', 7);
-
+    tick();
     expect(component.weatherData).toEqual(mockWeatherData);
     expect(component.forecastData).toEqual(mockForecastData);
-  });
+  }))
+
+  it('should handle errors during data fetching', fakeAsync(() => {
+    spyOn(weathersearchService, 'getCurrentWeather').and.returnValue(throwError('Weather error'));
+    spyOn(weathersearchService, 'getForecast').and.returnValue(throwError('Forecast error'));
+
+    component.query = ''; 
+    component.searchLocation();
+    tick();
+    expect(component.weatherData).toBeUndefined(); 
+    expect(component.forecastData).toBeUndefined(); 
+    expect(component.location).toEqual('Banglore');
+  }));
 });
