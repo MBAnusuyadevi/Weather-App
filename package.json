@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@angular/fire": "^7.6.1",
-    "@auth0/auth0-angular": "^2.2.1",
-    "firebase": "^10.5.0"
-  }
-}
