@@ -3,7 +3,6 @@ import { WeathersearchComponent } from './weathersearch.component';
 import { WeathersearchService } from 'src/app/Service/Weather-Search/weathersearch.service';
 import { of, throwError } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { LogoutComponent } from '../Authentication/logout/logout.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 class MockAngularFireAuth {
@@ -19,7 +18,7 @@ describe('WeathersearchComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [WeathersearchComponent, LogoutComponent],
+      declarations: [WeathersearchComponent],
       providers: [WeathersearchService,
         {
           provide: AngularFireAuth,

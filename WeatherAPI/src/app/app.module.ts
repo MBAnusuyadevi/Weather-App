@@ -6,12 +6,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { LocationComponent } from './Component/location/location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WeathersearchComponent } from './Component/weather-search/weathersearch.component';
-import { environment } from './environment';
+
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { RegistrationComponent } from './Component/Authentication/register/register.component';
-import { LoginComponent } from './Component/Authentication/login/login.component';
-import { LogoutComponent } from './Component/Authentication/logout/logout.component';
 import { HomeComponent } from './Component/home/home.component';
 
 
@@ -20,9 +17,6 @@ import { HomeComponent } from './Component/home/home.component';
     AppComponent,
     LocationComponent,
     WeathersearchComponent,
-    RegistrationComponent,
-    LoginComponent,
-    LogoutComponent,
     HomeComponent
   ],
   imports: [
@@ -31,8 +25,6 @@ import { HomeComponent } from './Component/home/home.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,7 +5,6 @@ import { LocationService } from 'src/app/Service/User Location/ForeCastLocation.
 import { ActivatedRoute, Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
-import { LogoutComponent } from '../Authentication/logout/logout.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 
@@ -24,7 +23,7 @@ describe('LocationComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [LocationComponent, LogoutComponent],
+      declarations: [LocationComponent],
       providers: [
         WeatherService,
         LocationService,

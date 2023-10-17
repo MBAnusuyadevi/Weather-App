@@ -1,37 +1,76 @@
-.image-container{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  height: 600px; /* Set the background color */
-  background-image: url(https://source.unsplash.com/random/1600x900/?weather);
+.centered {
+    margin: 0 auto;
+    padding: 0 1em;
 }
-h1{
-color:blue;;
+
+@media screen and (min-width: 52em) {
+    .centered {
+        max-width: 52em;
+    }
 }
-a{
-  background-color: #744caf; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
+.head-container {
+  background:rgb(133, 88, 133);
+  box-shadow: 3px 3px 8px hsl(0, 0%, 70%);
+}
+
+.site-title {
+  margin: 0 0 1em;
+  padding: 1em 0;
+  font-size: 2em;
+  font-weight: 300;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  color: pink;
 }
-a:hover {
-  background-color:palevioletred; /* Green */
+
+@media screen and (min-width: 44.44em) {
+  .site-title {
+      font-size: 2em;
+  }
+}
+  
+@media screen and (min-width: 50em) {
+  .site-title {
+      font-size: 2.5em;
+  }
+}
+
+.site-title a {
+  color: hsl(5, 45%, 95%);
+  text-decoration: none;
+}
+
+.site-title a:hover {
+  text-decoration: underline;
+}
+.button1{
+  font-size: 16px;
+  border-radius: 12px;
+  position: fixed;
+  top: 50px;
+  right: 20px;
+  padding: 16px;
+  background-color: pink;
+  transition-duration: 0.4s;
+  color: aqua;
+  font-style: italic;
+}
+.button1:hover{
+  background-color:peachpuff;
   color: white;
 }
-h2{
-  font-style: italic;
-  align-content: center;
-  animation-name: example;
-  animation-duration:10s;
+.button2{
+  font-size: 16px;
+  border-radius: 12px;
+  position: fixed;
+  top: 50px;
+  right: 120px;
+  padding: 16px;
+  background-color: pink;
+  transition-duration: 0.4s;
+  color: aqua;
+  font-style: oblique;
 }
-@keyframes example {
-  0%   {color:pink;}
-  25%  {color: palegoldenrod;}
-  50%  {color: blue;}
-  100% {color: purple;}
+.button2:hover{
+  background-color:peachpuff;
+  color: white;
 }

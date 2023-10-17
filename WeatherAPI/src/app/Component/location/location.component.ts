@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from 'src/app/Service/User Location/ForeCastLocation.service';
 import { WeatherService } from 'src/app/Service/User Location/weather.service';
-import { LogoutComponent } from '../Authentication/logout/logout.component';
+
 
 @Component({
   selector: 'app-location',
