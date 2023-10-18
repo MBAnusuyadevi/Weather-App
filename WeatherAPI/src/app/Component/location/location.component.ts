@@ -13,6 +13,8 @@ export class LocationComponent implements OnInit {
   weatherData: any;
   errorMessage: string = '';
   forecastData: any;
+  errorLocationMessage: string ='';
+  errorFetchMessage: string='';
   constructor( private route: ActivatedRoute,private router: Router,private weatherService: WeatherService, private locationService:LocationService) {}
 
   ngOnInit(): void {
@@ -37,7 +39,7 @@ export class LocationComponent implements OnInit {
         this.router.navigate(['/weather'], { queryParams: { lat, lon } });
       },
       (error) => {
-        this.errorMessage = 'Error getting geolocation.';
+        this.errorMessage = 'User blocked location detector.Please allow the location detector from settings';
         console.error(error);
       }
     );
@@ -52,7 +54,7 @@ export class LocationComponent implements OnInit {
         this.weatherData = data;
       },
       (error) => {
-        this.errorMessage = 'Error fetching weather data.';
+        this.errorLocationMessage = 'User blocked location detector.Please allow the location detector from settings';
         console.error(error);
       }
     );
@@ -66,7 +68,7 @@ export class LocationComponent implements OnInit {
                 this.forecastData = data;
               },
               (error) => {
-                this.errorMessage = 'Error fetching forecast data.';
+                this.errorFetchMessage = 'User blocked location detector.Please allow the location detector from settings';
                 console.error(error);
               }
             );

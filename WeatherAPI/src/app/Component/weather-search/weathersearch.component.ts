@@ -11,6 +11,7 @@ export class WeathersearchComponent {
   weatherData: any;
   forecastData: any;
   location: string = '';
+  errorMessage: string='';
 
   constructor(private weathersearchService: WeathersearchService) {}
 
@@ -18,16 +19,24 @@ export class WeathersearchComponent {
     this.weathersearchService.getCurrentWeather(this.query).subscribe(
       (data: any) => {
         this.weatherData = data;
+        this.errorMessage = '';
       },
       (error) => {
-        console.error('Error fetching weather data:', error);
+        console.error('Please enter correct country or city name');
+        this.errorMessage = 'Please enter correct country or city name';
       }
     );
   
         this.weathersearchService.getForecast(this.query,7)
       .subscribe((data) => {
         this.forecastData = data;
+        this.errorMessage = '';
 
-      });
+      },
+      (error) => {
+        console.error('Please enter correct country or city name');
+        this.errorMessage = 'Please enter correct country or city name';
+      }
+      );
     }     
 }

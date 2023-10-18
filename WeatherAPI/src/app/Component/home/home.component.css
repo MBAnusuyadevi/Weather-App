@@ -42,35 +42,70 @@
 .site-title a:hover {
   text-decoration: underline;
 }
-.button1{
-  font-size: 16px;
-  border-radius: 12px;
-  position: fixed;
-  top: 50px;
-  right: 20px;
-  padding: 16px;
-  background-color: pink;
-  transition-duration: 0.4s;
-  color: aqua;
-  font-style: italic;
+
+.card {
+	background: pink;
+	margin-bottom: 2em;	
 }
-.button1:hover{
-  background-color:peachpuff;
-  color: white;
+
+.card a {
+	color:purple;
+	text-decoration: none;
 }
-.button2{
-  font-size: 16px;
-  border-radius: 12px;
-  position: fixed;
-  top: 50px;
-  right: 120px;
-  padding: 16px;
-  background-color: pink;
-  transition-duration: 0.4s;
-  color: aqua;
-  font-style: oblique;
+
+.card a:hover {
+	box-shadow: 3px 3px 8px hsl(298, 91%, 45%);
 }
-.button2:hover{
-  background-color:peachpuff;
-  color: white;
+
+.card-content {
+	padding: 1.4em;
+}
+
+.card-content h2 {
+	margin-top: 0;
+	margin-bottom: .5em;
+	font-weight: normal;
+}
+
+.card-content p {
+	font-size: 95%;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+/* Flexbox styles */
+@media screen and (min-width: 40em) {  
+  .cards {
+    margin-top: -1em;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .card {
+    margin-bottom: 1em;
+    display: flex;
+    flex: 0 1 calc(50% - 0.5em);
+    /* width: calc(50% - 1em); */
+  }
+} /* mq 40em*/
+
+@media screen and (min-width: 60em) {
+  .cards {
+    margin-top: inherit;
+  }
+  
+  .card {
+    margin-bottom: 2em;
+    display: flex;
+    flex: 0 1 calc(33% - 0.5em);
+    /* width: calc(33% - 1em); */
+  }
+}
+.main-area{
+  background-color: plum;
+  padding: 60px
 }
